@@ -9,4 +9,8 @@ client.on('messageCreate', (msg) => {
         const num= msg.content.slice('/problem'.length).trim();
         msg.reply(`문제 링크: https://www.acmicpc.net/problem/${num}`);
     }
+    else if (msg.content.startsWith('/user')) {
+        const num = msg.content.slice('/user'.length).trim();
+        msg.reply(`사용자 정보: https://solved.ac/profile/${num}`);
+    }
 });
