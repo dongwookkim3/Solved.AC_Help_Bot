@@ -20,6 +20,10 @@ client.on('messageCreate', (msg) => {
         const index = arrstr.indexOf(str);
         msg.reply(`단계별로 풀어보기 링크: https://www.acmicpc.net/step/${arrnum[index]}`);
     }
+    else if (msg.content.startsWith('/workbook_user')) {
+        const num = msg.content.slice('/workbook_user'.length).trim();
+        msg.reply(`${num}가 만든 문제집 링크: https://www.acmicpc.net/workbook/by/${num}`);
+    }
     else if (msg.content.startsWith('/workbook')) {
         const num = msg.content.slice('/workbook'.length).trim();
         msg.reply(`문제 링크: https://www.acmicpc.net/workbook/view/${num}`);
