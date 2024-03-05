@@ -5,7 +5,12 @@ const fs= require('fs');
 client.login(fs.readFileSync('token.txt', 'utf8'));
 
 client.on('messageCreate', (msg) => {
-    if (msg.content.startsWith('/problem')) {
+    if (msg.content.startsWith('/problem_sort')) {
+        const str = msg.content.slice('/problem_sort'.length).trim();
+        if (str==='asc') msg.reply('오름차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_asc');
+        else msg.reply('내림차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_desc');
+    }
+    else if (msg.content.startsWith('/problem')) {
         const num= msg.content.slice('/problem'.length).trim();
         msg.reply(`문제 링크: https://www.acmicpc.net/problem/${num}`);
     }
