@@ -1,18 +1,29 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { Guilds, GuildMessages, MessageContent } = GatewayIntentBits;
 const client = new Client({ intents: [Guilds, GuildMessages, MessageContent] });
-const fs= require('fs');
-client.login(fs.readFileSync('token.txt', 'utf8'));
+client.login(require('fs').readFileSync('token.txt', 'utf8'));
 
 client.on('messageCreate', (msg) => {
-    if (msg.content.startsWith('/problem_sort')) {
-        const str = msg.content.slice('/problem_sort'.length).trim();
-        if (str==='asc') msg.reply('오름차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_asc');
-        else msg.reply('내림차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_desc');
+    if (msg.content.startsWith('/problem')) {
+        if (msg.content.startsWith('/problem_sort')) {
+            const str = msg.content.slice('/problem_sort'.length).trim();
+            if (str==='asc') msg.reply('오름차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_asc');
+            else msg.reply('내림차순 문제순위 링크: https://www.acmicpc.net/problemset?sort=ranking_desc');
+        }
+        else {
+            const num= msg.content.slice('/problem'.length).trim();
+            msg.reply(`문제 링크: https://www.acmicpc.net/problem/${num}`);
+        }
     }
-    else if (msg.content.startsWith('/problem')) {
-        const num= msg.content.slice('/problem'.length).trim();
-        msg.reply(`문제 링크: https://www.acmicpc.net/problem/${num}`);
+    else if (msg.content.startsWith('/workbook')) {
+        if (msg.content.startsWith('/workbook_user')) {
+            const num = msg.content.slice('/workbook_user'.length).trim();
+            msg.reply(`${num}가 만든 문제집 링크: https://www.acmicpc.net/workbook/by/${num}`);
+        }
+        else {
+            const num = msg.content.slice('/workbook'.length).trim();
+            msg.reply(`문제 링크: https://www.acmicpc.net/workbook/view/${num}`);
+        }
     }
     else if (msg.content.startsWith('/user')) {
         const num = msg.content.slice('/user'.length).trim();
@@ -24,13 +35,5 @@ client.on('messageCreate', (msg) => {
         const str = msg.content.slice('/step'.length).trim();
         const index = arrstr.indexOf(str);
         msg.reply(`단계별로 풀어보기 링크: https://www.acmicpc.net/step/${arrnum[index]}`);
-    }
-    else if (msg.content.startsWith('/workbook_user')) {
-        const num = msg.content.slice('/workbook_user'.length).trim();
-        msg.reply(`${num}가 만든 문제집 링크: https://www.acmicpc.net/workbook/by/${num}`);
-    }
-    else if (msg.content.startsWith('/workbook')) {
-        const num = msg.content.slice('/workbook'.length).trim();
-        msg.reply(`문제 링크: https://www.acmicpc.net/workbook/view/${num}`);
     }
 });
